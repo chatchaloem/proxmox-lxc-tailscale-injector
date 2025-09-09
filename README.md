@@ -24,6 +24,10 @@ lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file 0 0
 ```bash
 chmod +x install.sh
 ./install.sh
+
+OR
+
+wget -O - https://raw.githubusercontent.com/mirseo/proxmox-lxc-tailscale-injector/refs/heads/main/install.sh | sudo bash
 ```
 - 프롬프트가 뜨면 컨테이너 ID를 입력합니다. 예: `101`
 
