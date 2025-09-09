@@ -13,8 +13,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-echo "[proxmox LXC ID를 입력해주세요 >>> ] \c"
-read -r LXC_ID
+# 프롬프트 출력 시 이스케이프 문자를 사용하지 않도록 read -p 옵션 사용
+read -r -p "[proxmox LXC ID를 입력해주세요 >>> ] " LXC_ID
 
 # 숫자 형태인지 먼저 확인
 if ! [[ "$LXC_ID" =~ ^[0-9]+$ ]]; then
@@ -58,4 +58,3 @@ append_if_missing "$LINE1" "$CONF_PATH"
 append_if_missing "$LINE2" "$CONF_PATH"
 
 echo "완료: $CONF_PATH 파일의 마지막에 필요한 설정이 적용되었습니다."
-
