@@ -13,8 +13,21 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# 프롬프트 출력 시 이스케이프 문자를 사용하지 않도록 read -p 옵션 사용
-read -r -p "[proxmox LXC ID를 입력해주세요 >>> ] " LXC_ID
+# bash 전용 문법([[, (( )) 등])을 사용하므로 bash가 아닐 경우 재실행
+if [ -z "${BASH_VERSION:-}" ]; then
+  # 사람이 주로 `sh install.sh`로 실행했을 때를 대비
+  exec bash "$0" "$@"
+fi
+
+# 대화형/비대화형(파이프) 모두에서 안정적으로 입력을 받기 위한 처리
+if [ -t 0 ]; then
+  # 표준입력이 터미널이면 일반적인 방식으로 프롬프트와 입력
+  read -r -p "[proxmox LXC ID를 입력해주세요 >>> ] " LXC_ID
+else
+  # 파이프 설치(wget|bash 등) 시에는 /dev/tty에서 직접 입력을 받음
+  printf "[proxmox LXC ID를 입력해주세요 >>> ] " > /dev/tty
+  read -r LXC_ID < /dev/tty
+fi
 
 # 숫자 형태인지 먼저 확인
 if ! [[ "$LXC_ID" =~ ^[0-9]+$ ]]; then
