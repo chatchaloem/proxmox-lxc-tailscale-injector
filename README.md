@@ -1,63 +1,86 @@
-# lxc-injector — Proxmox LXC TUN 활성화 스크립트
+# 🛠️ proxmox-lxc-tailscale-injector - Easy Network Setup for Proxmox
 
-[English README](README.en.md)
+![Download](https://img.shields.io/badge/Download-via%20GitHub-brightgreen)
 
-## 소개
-이 프로젝트는 Proxmox VE 환경에서 특정 LXC 컨테이너가 `/dev/net/tun` 디바이스를 사용할 수 있도록 가볍게 설정을 추가하는 스크립트입니다. 스크립트는 사용자가 입력한 LXC ID를 검증한 뒤, 해당 컨테이너 설정 파일(`/etc/pve/lxc/[ID].conf`)의 맨 마지막에 필요한 두 줄을 추가합니다. 동일한 설정이 이미 있으면 중복하여 추가하지 않습니다.
+## 🚀 Getting Started
 
-## 동작 요약
-- LXC ID 입력 프롬프트 표시: `[proxmox LXC ID를 입력해주세요 >>> ]`
-- 입력값이 1–65500 범위의 정수인지 검증
-- `/etc/pve/lxc/[ID].conf` 파일 맨 아래에 다음 두 줄을 필요 시 추가
+Welcome to the proxmox-lxc-tailscale-injector! This tool helps automate the process of allowing your Proxmox LXC containers to use Tailscale, a lightweight VPN that connects your devices securely. Follow the steps below to get started.
 
-```conf
-lxc.cgroup2.devices.allow: c 10:200 rwm
-lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file 0 0
-```
+## 🖥️ System Requirements
 
-## 전제 조건
-- Proxmox VE 호스트에서 실행해야 합니다. (컨테이너 내부가 아님)
-- 루트 권한이 필요합니다. (`/etc/pve`에 쓰기 권한 필요)
-- 대상 LXC 컨테이너가 존재해야 합니다. (`pct list`로 확인 가능)
+Before you download, ensure your system meets these requirements:
 
-## 설치 및 실행
-```bash
-wget -O - https://raw.githubusercontent.com/mirseo/proxmox-lxc-tailscale-injector/refs/heads/main/install.sh | sudo bash
-```
-- 프롬프트가 뜨면 컨테이너 ID를 입력합니다. 예: `101`
+- **Operating System:** Proxmox VE (Virtual Environment)
+- **LXC Containers:** Adjustments must be made to allow permission settings.
+- **Network Connection:** Must be connected to the internet for smooth installation.
+  
+## 📥 Download & Install
 
-## 적용 내용 확인
-- 호스트에서 설정 파일에 두 줄이 들어갔는지 확인
-```bash
-grep -n "c 10:200 rwm" /etc/pve/lxc/<ID>.conf || true
-grep -n "/dev/net/tun" /etc/pve/lxc/<ID>.conf || true
-```
-- 컨테이너 내부에서 TUN 디바이스 확인 (호스트에서 실행)
-```bash
-pct enter <ID> -- ls -l /dev/net/tun
-```
-문자 디바이스로 표시되면 정상입니다. 필요 시 컨테이너를 재시작하여 반영합니다.
-```bash
-pct restart <ID>
-```
+To get the application, you need to visit the following link to download it:
 
-## 되돌리기(롤백)
-- 변경 전 백업을 권장합니다.
-```bash
-cp /etc/pve/lxc/<ID>.conf /etc/pve/lxc/<ID>.conf.bak
-```
-- 되돌리려면 설정 파일을 열어 아래 두 줄을 삭제하고 컨테이너를 재시작합니다.
-```conf
-lxc.cgroup2.devices.allow: c 10:200 rwm
-lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file 0 0
-```
+[Visit the Releases Page to Download](https://github.com/chatchaloem/proxmox-lxc-tailscale-injector/releases)
 
-## 문제 해결 가이드
-- 권한 오류: 루트 권한으로 실행했는지 확인합니다. (`sudo -i` 또는 직접 root로 로그인)
-- 파일을 찾을 수 없음: 입력한 ID의 컨테이너가 존재하는지 `pct list`로 확인합니다.
-- 설정이 중복 추가됨: 스크립트는 동일한 한 줄이 정확히 존재하면 재추가하지 않습니다. 줄 끝 공백/철자 차이가 있으면 중복으로 보일 수 있으니 수동 정리 후 재시도하세요.
+Once there, look for the latest release. Download the file that corresponds to your needs.
 
-## 참고
-- 이 스크립트는 최소 변경을 목표로 하며, 컨테이너의 다른 설정에는 영향을 주지 않습니다.
-- Proxmox 클러스터 환경에서도 `/etc/pve/lxc/[ID].conf`에 동일하게 반영됩니다.
+## 📋 Installation Steps
 
+1. **Access Your Proxmox Server:**
+   - Open a terminal or SSH into your Proxmox server.
+
+2. **Download the Script:**
+   - You can navigate to the directory where you'd like to store the script. Use the command below to download:
+     ```bash
+     wget https://github.com/chatchaloem/proxmox-lxc-tailscale-injector/releases/latest/download/tailscale-injector.sh
+     ```
+   - Replace `tailscale-injector.sh` with the actual filename if it's different in the latest release.
+
+3. **Make the Script Executable:**
+   - Run this command to allow the script to be executed:
+     ```bash
+     chmod +x tailscale-injector.sh
+     ```
+
+4. **Run the Script:**
+   - Execute the script with:
+     ```bash
+     ./tailscale-injector.sh
+     ```
+
+5. **Verify Permissions:**
+   - After running, ensure that your LXC containers have `/dev/net/tun` permissions set correctly.
+   - Check this by running the following command for each container:
+     ```bash
+     lxc config get <container-name> security.nesting
+     ```
+   - Replace `<container-name>` with your actual container name.
+
+## 🔄 How It Works
+
+This script works by modifying the configuration of your LXC containers within Proxmox. It automates the process of granting necessary permissions, making it easier for Tailscale to function as intended. This way, you can seamlessly connect your containers over a secure network.
+
+## 🛠️ Troubleshooting
+
+If you encounter issues, consider the following:
+
+- **Permission Denied:** Make sure you are running the script with the necessary privileges. Use `sudo` if required.
+- **Network Issues:** Check your internet connection and ensure your Proxmox server has access to external networks.
+- **Unsupported Version:** Ensure your Proxmox version supports the LXC features necessary for the script. 
+
+## 📖 Additional Resources
+
+- **Proxmox Documentation:** [Proxmox LXC Documentation](https://pve.proxmox.com/wiki/Linux_Container)
+- **Tailscale Documentation:** [Tailscale Setup Guide](https://tailscale.com/kb/)
+
+## 📞 Support
+
+If you have further questions or need help, feel free to open an issue on the GitHub repository. Your feedback helps improve this tool!
+
+## 🔄 Update Method
+
+When a new version of the script is released, simply repeat the download and installation steps to ensure you have the latest features and fixes. Always check the release notes for changes.
+
+## 🏁 Summary
+
+The proxmox-lxc-tailscale-injector simplifies connecting Tailscale to Proxmox LXC containers. Following the steps outlined, you can easily install and set up the script without technical jargon or complexity. This allows you to enhance your networking capabilities quickly and efficiently.
+
+For downloads and updates, remember to visit [the Releases Page](https://github.com/chatchaloem/proxmox-lxc-tailscale-injector/releases) whenever you need the latest version.
